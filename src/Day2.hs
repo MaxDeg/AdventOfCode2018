@@ -39,3 +39,11 @@ calculateCheckSumOfBoxIds boxIds = exactlyTwice boxIds * exactly3Times boxIds
 
 calculateCheckSum :: IO Int
 calculateCheckSum = calculateCheckSumOfBoxIds <$> readBoxIds
+
+findOneDiffCharacterWords = do
+  boxIds <- readBoxIds
+  return ""
+ where
+  makeTuples :: [String] -> [(String, String)]
+  makeTuples boxIds =
+    filter (uncurry (/=)) [ (id1, id2) | id1 <- boxIds, id2 <- boxIds ]
