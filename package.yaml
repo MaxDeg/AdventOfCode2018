@@ -11,8 +11,7 @@ extra-source-files:
 - ChangeLog.md
 
 data-files:
-- data/Day1.txt
-- data/Day2.txt
+- data/Day*.txt
 
 # Metadata used when publishing your package
 # synopsis:            Short description of your package

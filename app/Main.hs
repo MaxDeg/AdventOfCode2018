@@ -4,6 +4,7 @@ module Main where
 
 import           Day1
 import           Day2
+import           Day3
 
 main :: IO ()
 main = do
@@ -22,6 +23,10 @@ main = do
   putStrLn $ "BoxIds checksum: " <> show checksum
   commonLetters <- findCommonLettersInBoxIds
   putStrLn $ "Common Letters: " <> show commonLetters
+
+  putStrLn "-------------------------------------------------------------------"
+  putStrLn "Day 3 - Calibration"
+  putStrLn "-------------------------------------------------------------------"
 
   putStrLn "It's done for now"
 

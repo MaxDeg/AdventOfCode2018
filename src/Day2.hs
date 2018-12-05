@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module Day2
   ( calculateCheckSumOfBoxIds
   , calculateCheckSum

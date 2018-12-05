@@ -1,4 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE LambdaCase #-}
 
 module Day1
@@ -17,9 +16,6 @@ import           Text.Megaparsec.Char           ( eol )
 import qualified Text.Megaparsec.Char.Lexer    as L
 
 import           Data.Void                      ( Void )
-import           Data.Text                      ( Text
-                                                , unpack
-                                                )
 import           Data.Set                       ( insert
                                                 , member
                                                 )
