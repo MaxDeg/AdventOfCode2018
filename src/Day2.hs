@@ -3,6 +3,8 @@
 module Day2
   ( calculateCheckSumOfBoxIds
   , calculateCheckSum
+  , findCommonLetters
+  , findCommonLettersInBoxIds
   )
 where
 
@@ -15,6 +17,7 @@ import           Data.List                      ( filter
                                                 , sort
                                                 , length
                                                 , head
+                                                , intersect
                                                 )
 
 
@@ -40,10 +43,22 @@ calculateCheckSumOfBoxIds boxIds = exactlyTwice boxIds * exactly3Times boxIds
 calculateCheckSum :: IO Int
 calculateCheckSum = calculateCheckSumOfBoxIds <$> readBoxIds
 
-findOneDiffCharacterWords = do
-  boxIds <- readBoxIds
-  return ""
+findCommonLettersInBoxIds :: IO String
+findCommonLettersInBoxIds = findCommonLetters <$> readBoxIds
+
+findCommonLetters :: [String] -> String
+findCommonLetters boxIds = w1 `intersect` w2
  where
   makeTuples :: [String] -> [(String, String)]
-  makeTuples boxIds =
-    filter (uncurry (/=)) [ (id1, id2) | id1 <- boxIds, id2 <- boxIds ]
+  makeTuples boxIds = [ (id1, id2) | id1 <- boxIds, id2 <- boxIds, id1 /= id2 ]
+  (w1, w2) =
+    head $ filter (uncurry filterWordsWithOneCharDiff) $ makeTuples boxIds
+
+
+findDifferentCharactersInWord :: String -> String -> [Char]
+findDifferentCharactersInWord w1 w2 =
+  fmap fst $ filter (uncurry (/=)) $ zip w1 w2
+
+filterWordsWithOneCharDiff :: String -> String -> Bool
+filterWordsWithOneCharDiff w1 w2 =
+  length (findDifferentCharactersInWord w1 w2) == 1

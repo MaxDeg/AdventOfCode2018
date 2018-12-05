@@ -20,7 +20,8 @@ main = do
   putStrLn "-------------------------------------------------------------------"
   checksum <- calculateCheckSum
   putStrLn $ "BoxIds checksum: " <> show checksum
-  putStrLn $ "BoxId: "
+  commonLetters <- findCommonLettersInBoxIds
+  putStrLn $ "Common Letters: " <> show commonLetters
 
   putStrLn "It's done for now"
 
