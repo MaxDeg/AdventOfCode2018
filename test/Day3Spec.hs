@@ -9,6 +9,8 @@ import           Test.Hspec
 
 import           Text.Megaparsec
 
+import           Data.Set                       ( singleton )
+
 
 
 spec :: Spec
@@ -90,3 +92,11 @@ spec = do
           overlappingPositions
             `shouldBe` [Position 4 4, Position 4 5, Position 5 4, Position 5 5]
           countOverlappingSquareInches rectangles `shouldBe` 4
+  it "should find Claim 3 has not overlapping"
+    $ let rectangles =
+            [ ClaimRectangle (ClaimId 1) (Position 1 3) (RectangleSize 4 4)
+            , ClaimRectangle (ClaimId 2) (Position 3 1) (RectangleSize 4 4)
+            , ClaimRectangle (ClaimId 3) (Position 5 5) (RectangleSize 2 2)
+            ]
+      in  getNonOverlappingClaim rectangles `shouldBe` [ClaimId 3]
+

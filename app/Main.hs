@@ -35,7 +35,10 @@ main = do
   putStrLn
     $  "How many square inches of fabric are within two or more claims? "
     <> show overlappingCount
-  putStrLn $ "What is the ID of the only claim that doesn't overlap?"
+  nonOverlappingClaims <- findNotOverlappingClaim
+  putStrLn
+    $  "What is the ID of the only claim that doesn't overlap?"
+    <> show nonOverlappingClaims
 
   putStrLn "It's done for now"
 

@@ -13,6 +13,8 @@ module Day3
   , calculateOverlappingPositions
   , countOverlappingSquareInches
   , findOverlappingSquareInches
+  , getNonOverlappingClaim
+  , findNotOverlappingClaim
   )
 where
 
@@ -28,7 +30,16 @@ import           Data.Void                      ( Void )
 import           Data.Either                    ( rights )
 import           Data.List                      ( group
                                                 , sort
+                                                , intersect
+                                                , any
                                                 )
+import           Data.Set                       ( Set
+                                                , insert
+                                                , member
+                                                , elemAt
+                                                , size
+                                                )
+
 
 -- | Types---- -----------------------------------------------------------------
 
@@ -49,9 +60,9 @@ data RectangleSize = RectangleSize
   deriving (Show, Eq)
 
 data ClaimRectangle = ClaimRectangle
-  { claimId :: ClaimId
-  , position :: Position
-  , size :: RectangleSize }
+  { _claimId :: ClaimId
+  , _position :: Position
+  , _size :: RectangleSize }
   deriving (Show, Eq)
 
 type Parser = Parsec Void String
@@ -96,11 +107,11 @@ parseClaims claimsData = rights claims
   where claims = fmap (runParser claimParser "Claims Data") claimsData
 
 calculateSquareInchesFromRectangle :: ClaimRectangle -> [Position]
-calculateSquareInchesFromRectangle ClaimRectangle { position = p, size = s } =
-  [ Position (x + left) (y + top)
-  | x <- [1 .. (width s)]
-  , y <- [1 .. (height s)]
-  ]
+calculateSquareInchesFromRectangle ClaimRectangle { _position = p, _size = s }
+  = [ Position (x + left) (y + top)
+    | x <- [1 .. (width s)]
+    , y <- [1 .. (height s)]
+    ]
  where
   left = leftDistance p
   top  = topDistance p
@@ -119,5 +130,36 @@ findOverlappingSquareInches :: IO Int
 findOverlappingSquareInches =
   countOverlappingSquareInches . parseClaims <$> readClaimsData
 
+getOverlappingPositions :: ClaimRectangle -> ClaimRectangle -> [Position]
+getOverlappingPositions r1 r2 = calculateSquareInchesFromRectangle r1
+  `intersect` calculateSquareInchesFromRectangle r2
 
+areOverlapping :: ClaimRectangle -> ClaimRectangle -> Bool
+areOverlapping ClaimRectangle { _position = p1, _size = s1 } ClaimRectangle { _position = p2, _size = s2 }
+  = not
+    $  leftDistance p2
+    >= leftDistance p1
+    +  width s1
+    || leftDistance p2
+    +  width s2
+    <= leftDistance p1
+    || topDistance p2
+    >= topDistance p1
+    +  height s1
+    || topDistance p2
+    +  height s2
+    <= topDistance p1
 
+getNonOverlappingClaim :: [ClaimRectangle] -> [ClaimId]
+getNonOverlappingClaim claims =
+  [ _claimId r1
+  | r1 <- claims
+  , not (any (\i -> _claimId r1 /= _claimId i && areOverlapping r1 i) claims)
+  ]
+
+findNotOverlappingClaim :: IO ClaimId
+findNotOverlappingClaim = do
+  claimIds <- getNonOverlappingClaim . parseClaims <$> readClaimsData
+  if length claimIds > 1
+    then fail "More than one claim found"
+    else pure $ head claimIds
