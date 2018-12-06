@@ -12,21 +12,30 @@ main = do
   putStrLn "Day 1 - Calibration"
   putStrLn "-------------------------------------------------------------------"
   f <- calibrate
-  putStrLn $ "Frequency after calibration: " <> show f
+  putStrLn $ "what is the resulting frequency? " <> show f
   freqReachedTwice <- firstFrequencyReachedTwice
-  putStrLn $ "Frequency reached twice: " <> show freqReachedTwice
+  putStrLn
+    $  "What is the first frequency your device reaches twice? "
+    <> show freqReachedTwice
 
   putStrLn "-------------------------------------------------------------------"
   putStrLn "Day 2 - Calibration"
   putStrLn "-------------------------------------------------------------------"
   checksum <- calculateCheckSum
-  putStrLn $ "BoxIds checksum: " <> show checksum
+  putStrLn $ "What is the checksum for your list of box IDs? " <> show checksum
   commonLetters <- findCommonLettersInBoxIds
-  putStrLn $ "Common Letters: " <> show commonLetters
+  putStrLn
+    $  "What letters are common between the two correct box IDs? "
+    <> show commonLetters
 
   putStrLn "-------------------------------------------------------------------"
   putStrLn "Day 3 - Calibration"
   putStrLn "-------------------------------------------------------------------"
+  overlappingCount <- findOverlappingSquareInches
+  putStrLn
+    $  "How many square inches of fabric are within two or more claims? "
+    <> show overlappingCount
+  putStrLn $ "What is the ID of the only claim that doesn't overlap?"
 
   putStrLn "It's done for now"
 
