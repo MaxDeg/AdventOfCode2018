@@ -26,7 +26,6 @@ import           Text.Megaparsec
 import           Text.Megaparsec.Char
 import qualified Text.Megaparsec.Char.Lexer    as L
 
-import           Data.Void                      ( Void )
 import           Data.Either                    ( rights )
 import           Data.List                      ( group
                                                 , sort
@@ -41,7 +40,7 @@ import           Data.Set                       ( Set
                                                 )
 
 
--- | Types---- -----------------------------------------------------------------
+-- | Types ---------------------------------------------------------------------
 
 newtype ClaimId = ClaimId Int
   deriving (Show, Eq, Ord)
@@ -64,8 +63,6 @@ data ClaimRectangle = ClaimRectangle
   , _position :: Position
   , _size :: RectangleSize }
   deriving (Show, Eq)
-
-type Parser = Parsec Void String
 
 -- | Functions -----------------------------------------------------------------
 

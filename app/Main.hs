@@ -37,7 +37,7 @@ main = do
     <> show overlappingCount
   nonOverlappingClaims <- findNotOverlappingClaim
   putStrLn
-    $  "What is the ID of the only claim that doesn't overlap?"
+    $  "What is the ID of the only claim that doesn't overlap? "
     <> show nonOverlappingClaims
 
   putStrLn "It's done for now"

@@ -28,6 +28,7 @@ dependencies:
 - text
 - containers
 - filepath
+- time
 
 library:
   source-dirs: src

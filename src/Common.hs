@@ -1,5 +1,6 @@
 module Common
-  ( readData
+  ( Parser
+  , readData
   )
 where
 
@@ -9,6 +10,15 @@ where
 import           Paths_adventofcode2018
 
 import           System.FilePath
+
+import           Text.Megaparsec
+
+import           Data.Void                      ( Void )
+
+
+-- | Types ---------------------------------------------------------------------
+
+type Parser = Parsec Void String
 
 -- | Functions -----------------------------------------------------------------
 
